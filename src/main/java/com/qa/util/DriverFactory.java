@@ -4,9 +4,11 @@ import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,31 +25,37 @@ public class DriverFactory {
 		if (!browserOpened) {
 			if (driver == null) {
 				switch (browser.toLowerCase()) {
-				case "chrome":
-					WebDriverManager.chromedriver().setup();
+			    case "chrome":
+			        WebDriverManager.chromedriver().setup();
+			        ChromeOptions chromeOptions = new ChromeOptions();
+			        chromeOptions.addArguments("--headless");
+			        chromeOptions.addArguments("--no-sandbox");
+			        chromeOptions.addArguments("--disable-dev-shm-usage");
+			        chromeOptions.addArguments("--window-size=1920,1080");
+			        driver = new ChromeDriver(chromeOptions);
+			        break;
 
-					driver = new ChromeDriver();
-					break;
+			    case "firefox":
+			        WebDriverManager.firefoxdriver().setup();
+			        FirefoxOptions firefoxOptions = new FirefoxOptions();
+			        //firefoxOptions.(true); // simpler API for Firefox
+			        firefoxOptions.addArguments("--width=1920");
+			        firefoxOptions.addArguments("--height=1080");
+			        driver = new FirefoxDriver(firefoxOptions);
+			        break;
 
-				case "firefox":
-					WebDriverManager.firefoxdriver().setup();
+			    case "edge":
+			        WebDriverManager.edgedriver().setup();
+			        EdgeOptions edgeOptions = new EdgeOptions();
+			        edgeOptions.addArguments("--headless");
+			        edgeOptions.addArguments("--disable-gpu"); // required for Edge headless
+			        edgeOptions.addArguments("--window-size=1920,1080");
+			        driver = new EdgeDriver(edgeOptions);
+			        break;
 
-					driver = new FirefoxDriver();
-					break;
-
-				case "edge":
-					WebDriverManager.edgedriver().setup();
-					driver = new EdgeDriver();
-					break;
-
-				case "safari":
-					// Safari doesn't need WebDriverManager setup as it comes with macOS.
-					driver = new SafariDriver();
-					break;
-
-				default:
-					throw new IllegalArgumentException("Browser \"" + browser + "\" is not supported.");
-				}
+			    default:
+			        throw new IllegalArgumentException("Unsupported browser: " + browser);
+			}
 
 				browserOpened = true;
 				driver.manage().window().maximize();
