@@ -166,12 +166,12 @@ public class Login_Page_Actions {
 
 		if (driverUtil.existsElement("//li[contains(@class,'hide-sm')]")) {
 
-			((new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(10))))
-					.until(ExpectedConditions.visibilityOf(login.user_icon));
-			login.getuser_icon().click();
+//			((new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(10))))
+//					.until(ExpectedConditions.visibilityOf(login.user_icon));
+			//login.getuser_icon().click();
 
-			logger.info("User Name::: {}",
-					login.getuser_name().getText().trim().toString().toUpperCase(Locale.ENGLISH));
+//			logger.info("User Name::: {}",
+//					login.getuser_name().getText().trim().toString().toUpperCase(Locale.ENGLISH));
 
 			/*
 			 * logger.error("Login is Failed: {}",

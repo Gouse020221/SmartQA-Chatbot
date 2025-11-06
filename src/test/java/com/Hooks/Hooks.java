@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.StepImplementation.CustomLogCollector;
+import com.driverUtility.ProfessionalTestReport;
 import com.qa.util.DriverFactory;
 
 import io.cucumber.java.After;
@@ -75,34 +76,59 @@ public class Hooks {
 
 	}
 
-	// @AfterAll
-	public static void after_all() {
-		try {
-
-		//	ScreenRecorderUtil.stopRecord();
-			File folder = new File("./test-recordings/");
-			File[] files = folder.listFiles();
-
-			if (files != null && files.length > 0) {
-				// Find the last modified file (which should be the video for this scenario)
-				File latestFile = files[files.length - 1]; // assuming this is the video just recorded
-
-				// Attach the video to the Cucumber report
-				Path path = Paths.get(latestFile.getAbsolutePath());
-				String absolutePath = path.toString();
-
-				// Create a link to the video (make sure to use relative paths for portability)
-				logger.info("Video Recording available at: {} ", absolutePath);
-
-				// Attach the link to the Cucumber report
-				// scenario.attach(message.getBytes(), "text/html", "Video Recording");
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+//	// @AfterAll
+//	public static void after_all() {
+//		try {
+//
+//		//	ScreenRecorderUtil.stopRecord();
+//			File folder = new File("./test-recordings/");
+//			File[] files = folder.listFiles();
+//
+//			if (files != null && files.length > 0) {
+//				// Find the last modified file (which should be the video for this scenario)
+//				File latestFile = files[files.length - 1]; // assuming this is the video just recorded
+//
+//				// Attach the video to the Cucumber report
+//				Path path = Paths.get(latestFile.getAbsolutePath());
+//				String absolutePath = path.toString();
+//
+//				// Create a link to the video (make sure to use relative paths for portability)
+//				logger.info("Video Recording available at: {} ", absolutePath);
+//
+//				// Attach the link to the Cucumber report
+//				// scenario.attach(message.getBytes(), "text/html", "Video Recording");
+//			}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
+	
+	 @AfterAll
+	    public static void generateAIReport() {
+	        logger.info("All scenarios completed. Generating professional test report...");
+	       
+	        try {
+	            // Small delay to ensure Cucumber finishes writing JSON file
+	            Thread.sleep(2000);
+	            
+	            // Generate professional report immediately (not in shutdown hook)
+	            try {
+	                ProfessionalTestReport.generateReport();
+	                logger.info("✅ Professional Test Report generated successfully!");
+	                logger.info("📊 Report location: target/cucumber-reports/Test_Execution_Performance_Report.html");
+	            } catch (Exception e) {
+	                logger.error("❌ Error generating professional report: {}", e.getMessage());
+	                e.printStackTrace();
+	            }
+	            
+	            logger.info("Test report generation completed.");
+	        } catch (InterruptedException e) {
+	            logger.error("Report generation interrupted: {}", e.getMessage());
+	        }
+	    }
+	 
 
 }
 
