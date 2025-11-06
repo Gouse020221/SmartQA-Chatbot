@@ -31,7 +31,7 @@ public class DriverFactory {
 			        chromeOptions.addArguments("--headless");
 			        chromeOptions.addArguments("--no-sandbox");
 			        chromeOptions.addArguments("--disable-dev-shm-usage");
-			        chromeOptions.addArguments("--window-size=1920,1080");
+			       // chromeOptions.addArguments("--window-size=1920,1080");
 			        driver = new ChromeDriver(chromeOptions);
 			        break;
 
@@ -39,8 +39,8 @@ public class DriverFactory {
 			        WebDriverManager.firefoxdriver().setup();
 			        FirefoxOptions firefoxOptions = new FirefoxOptions();
 			        //firefoxOptions.(true); // simpler API for Firefox
-			        firefoxOptions.addArguments("--width=1920");
-			        firefoxOptions.addArguments("--height=1080");
+			       // firefoxOptions.addArguments("--width=1920");
+			        //firefoxOptions.addArguments("--height=1080");
 			        driver = new FirefoxDriver(firefoxOptions);
 			        break;
 
@@ -49,7 +49,7 @@ public class DriverFactory {
 			        EdgeOptions edgeOptions = new EdgeOptions();
 			        edgeOptions.addArguments("--headless");
 			        edgeOptions.addArguments("--disable-gpu"); // required for Edge headless
-			        edgeOptions.addArguments("--window-size=1920,1080");
+			       // edgeOptions.addArguments("--window-size=1920,1080");
 			        driver = new EdgeDriver(edgeOptions);
 			        break;
 
