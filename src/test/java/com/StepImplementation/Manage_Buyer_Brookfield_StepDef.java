@@ -344,7 +344,7 @@ public class Manage_Buyer_Brookfield_StepDef {
 				if (i > 1) {
 					Thread.sleep(3000); // Extra wait after previous buyer was saved
 				}
-				
+				//((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].click();", buyerBrookfield.addbuyer_btn);
 				buyerBrookfield.addbuyer_btn.click();
 				Thread.sleep(1000);
 				

@@ -56,7 +56,7 @@ public class AITestDataGenerator {
      * @return Generated test data
      */
     public String generateTestData(String prompt) {
-        return generateTestData(prompt, 300, 0.7);
+        return generateTestData(prompt, 400, 0.7);
     }
     
     /**
@@ -88,7 +88,10 @@ public class AITestDataGenerator {
                 
                 // Build Gemini request body
                 JsonObject textPart = new JsonObject();
-                textPart.addProperty("text", prompt + ". Give me just the answer, no explanation.");
+                // Add random number to prompt for uniqueness (shorter than timestamp)
+                int random = (int)(Math.random() * 10000);
+                String uniquePrompt = prompt + ". Just the value, #" + random;
+                textPart.addProperty("text", uniquePrompt);
                 
                 JsonObject content = new JsonObject();
                 JsonArray parts = new JsonArray();
@@ -101,12 +104,12 @@ public class AITestDataGenerator {
                 requestBody = new JsonObject();
                 requestBody.add("contents", contents);
                 
-                // Add generation config
+                // Add generation config with increased randomness for variety
                 JsonObject generationConfig = new JsonObject();
-                generationConfig.addProperty("temperature", temperature);
+                generationConfig.addProperty("temperature", 1.0);  // Maximum variety
                 generationConfig.addProperty("maxOutputTokens", maxTokens);
-                generationConfig.addProperty("topK", 1);  // More deterministic
-                generationConfig.addProperty("topP", 0.1);  // Reduce randomness
+                generationConfig.addProperty("topK", 40);  // More options for variety
+                generationConfig.addProperty("topP", 0.95);  // Increased for more randomness
                 requestBody.add("generationConfig", generationConfig);
                 
                 // Add API key to URL for Gemini
