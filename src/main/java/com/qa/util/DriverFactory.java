@@ -31,7 +31,7 @@ public class DriverFactory {
 			        chromeOptions.addArguments("--headless");
 			        chromeOptions.addArguments("--no-sandbox");
 			        chromeOptions.addArguments("--disable-dev-shm-usage");
-			       // chromeOptions.addArguments("--window-size=1920,1080");
+			        chromeOptions.addArguments("--window-size=1920,1080");
 			        driver = new ChromeDriver(chromeOptions);
 			        break;
 
@@ -58,7 +58,7 @@ public class DriverFactory {
 			}
 
 				browserOpened = true;
-				driver.manage().window().maximize();
+				//driver.manage().window().maximize();
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 				waitForPageLoad();
 			}
