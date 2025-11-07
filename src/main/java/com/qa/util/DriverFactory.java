@@ -27,30 +27,30 @@ public class DriverFactory {
 				switch (browser.toLowerCase()) {
 			    case "chrome":
 			        WebDriverManager.chromedriver().setup();
-			        ChromeOptions chromeOptions = new ChromeOptions();
-			        chromeOptions.addArguments("--headless");
-			        chromeOptions.addArguments("--no-sandbox");
-			        chromeOptions.addArguments("--disable-dev-shm-usage");
-			        chromeOptions.addArguments("--window-size=1920,1080");
-			        driver = new ChromeDriver(chromeOptions);
+			        //ChromeOptions chromeOptions = new ChromeOptions();
+			      //  chromeOptions.addArguments("--headless");
+			       // chromeOptions.addArguments("--no-sandbox");
+			       // chromeOptions.addArguments("--disable-dev-shm-usage");
+			       // chromeOptions.addArguments("--window-size=1920,1080");
+			        driver = new ChromeDriver(/*chromeOptions*/);
 			        break;
 
 			    case "firefox":
 			        WebDriverManager.firefoxdriver().setup();
-			        FirefoxOptions firefoxOptions = new FirefoxOptions();
+			       // FirefoxOptions firefoxOptions = new FirefoxOptions();
 			        //firefoxOptions.(true); // simpler API for Firefox
 			       // firefoxOptions.addArguments("--width=1920");
 			        //firefoxOptions.addArguments("--height=1080");
-			        driver = new FirefoxDriver(firefoxOptions);
+			        driver = new FirefoxDriver();
 			        break;
 
 			    case "edge":
 			        WebDriverManager.edgedriver().setup();
-			        EdgeOptions edgeOptions = new EdgeOptions();
-			        edgeOptions.addArguments("--headless");
-			        edgeOptions.addArguments("--disable-gpu"); // required for Edge headless
+			        //EdgeOptions edgeOptions = new EdgeOptions();
+			       // edgeOptions.addArguments("--headless");
+			       // edgeOptions.addArguments("--disable-gpu"); // required for Edge headless
 			       // edgeOptions.addArguments("--window-size=1920,1080");
-			        driver = new EdgeDriver(edgeOptions);
+			        driver = new EdgeDriver();
 			        break;
 
 			    default:
@@ -58,7 +58,7 @@ public class DriverFactory {
 			}
 
 				browserOpened = true;
-				//driver.manage().window().maximize();
+				driver.manage().window().maximize();
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 				waitForPageLoad();
 			}
