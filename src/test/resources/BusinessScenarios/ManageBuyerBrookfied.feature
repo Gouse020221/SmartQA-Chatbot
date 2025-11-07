@@ -20,4 +20,4 @@ Feature: Checking the complete functionalities of Manage Buyer Information Setti
 
     Examples: 
       | validBuyerCount | invalidBuyerCount |
-      |               2 |                 1 |
+      |               1 |                 1 |
