@@ -28,10 +28,10 @@ public class DriverFactory {
 			    case "chrome":
 			        WebDriverManager.chromedriver().setup();
 			        ChromeOptions chromeOptions = new ChromeOptions();
-//			        chromeOptions.addArguments("--headless");
-//			        chromeOptions.addArguments("--no-sandbox");
-//			        chromeOptions.addArguments("--disable-dev-shm-usage");
-//			        chromeOptions.addArguments("--window-size=1920,1080");
+			        chromeOptions.addArguments("--headless");
+			        chromeOptions.addArguments("--no-sandbox");
+			        chromeOptions.addArguments("--disable-dev-shm-usage");
+			        chromeOptions.addArguments("--window-size=1920,1080");
 			        driver = new ChromeDriver(chromeOptions);
 			        break;
 
@@ -57,8 +57,8 @@ public class DriverFactory {
 			        throw new IllegalArgumentException("Unsupported browser: " + browser);
 			}
 
-				browserOpened = false;
-				driver.manage().window().maximize();
+				browserOpened = true;
+				//driver.manage().window().maximize();
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 				waitForPageLoad();
 			}
