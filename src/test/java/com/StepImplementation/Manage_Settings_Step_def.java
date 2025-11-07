@@ -1,5 +1,6 @@
 package com.StepImplementation;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,6 +9,8 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +20,7 @@ import com.qa.util.ProjectStatus;
 
 
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
 
 public class Manage_Settings_Step_def  {
 
@@ -74,6 +78,13 @@ public class Manage_Settings_Step_def  {
 			logger.error("Value not exists");
 		}
 
+	}
+	
+	@When("^I click on manage settings icon$")
+	public void customer_click_on_manage_settings_icon() {
+		((new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(20))))
+				.until(ExpectedConditions.elementToBeClickable(home.getsetting_list()));
+		home.getsetting_list().click();
 	}
 }
 //
