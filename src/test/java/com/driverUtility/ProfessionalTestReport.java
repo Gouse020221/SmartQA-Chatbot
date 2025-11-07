@@ -23,6 +23,7 @@ public class ProfessionalTestReport {
     private static final Logger logger = LoggerFactory.getLogger(ProfessionalTestReport.class);
     private static final String JSON_REPORT_PATH = "target/cucumber-reports/Cucumber.json";
     private static final String HTML_REPORT_PATH = "target/cucumber-reports/Test_Execution_Performance_Report.html";
+    private static final String TEXT_REPORT_PATH = "target/cucumber-reports/Test_Execution_Performance_Report.txt";
 
     public static class TestAnalysis {
         int totalScenarios = 0;
@@ -80,6 +81,10 @@ public class ProfessionalTestReport {
             // Generate HTML Report
             generateHTMLReport(analysis);
             logger.info("Professional HTML Report generated at: {}", HTML_REPORT_PATH);
+            
+            // Generate Text Report
+            generateTextReport(analysis);
+            logger.info("Professional Text Report generated at: {}", TEXT_REPORT_PATH);
             
         } catch (Exception e) {
             logger.error("Error generating report: {}", e.getMessage(), e);
@@ -528,6 +533,232 @@ public class ProfessionalTestReport {
         css.append(".footer { margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1; text-align: center; color: #7f8c8d; font-size: 12px; }\n");
         css.append("@media print { body { background: white; } .container { box-shadow: none; padding: 20px; } .section { page-break-inside: avoid; } }\n");
         return css.toString();
+    }
+    
+    /**
+     * Generate a professional text report suitable for email attachments
+     */
+    private static void generateTextReport(TestAnalysis analysis) {
+        try {
+            String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
+            String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+            double passRate = analysis.totalScenarios > 0 
+                ? (analysis.passedScenarios * 100.0 / analysis.totalScenarios) 
+                : 0;
+            
+            StringBuilder txt = new StringBuilder();
+            
+            // Header
+            txt.append("═══════════════════════════════════════════════════════════════════════════\n");
+            txt.append("                   TEST EXECUTION PERFORMANCE REPORT                       \n");
+            txt.append("═══════════════════════════════════════════════════════════════════════════\n\n");
+            
+            txt.append("Date:        ").append(currentDate).append("\n");
+            txt.append("Timestamp:   ").append(currentDateTime).append("\n");
+            txt.append("Test Suite:  ").append(analysis.featureName).append("\n");
+            txt.append("Browser:     Chrome\n");
+            txt.append("Generated:   Automation Testing Team\n");
+            txt.append("\n");
+            
+            // Executive Summary
+            txt.append("───────────────────────────────────────────────────────────────────────────\n");
+            txt.append("  EXECUTIVE SUMMARY\n");
+            txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+            
+            if (!analysis.featureDescription.isEmpty()) {
+                txt.append(analysis.featureDescription).append("\n\n");
+            }
+            
+            txt.append(String.format("  Total Scenarios:    %d\n", analysis.totalScenarios));
+            txt.append(String.format("  Passed:             %d ✓\n", analysis.passedScenarios));
+            txt.append(String.format("  Failed:             %d %s\n", analysis.failedScenarios, 
+                analysis.failedScenarios > 0 ? "✗" : ""));
+            txt.append(String.format("  Pass Rate:          %.2f%%\n", passRate));
+            txt.append(String.format("  Total Duration:     %s\n", formatDuration(analysis.totalDuration)));
+            txt.append(String.format("  Total Steps:        %d\n", analysis.totalSteps));
+            txt.append(String.format("  Step Success Rate:  %.2f%%\n", 
+                analysis.totalSteps > 0 ? (analysis.passedSteps * 100.0 / analysis.totalSteps) : 0));
+            txt.append("\n");
+            
+            // Test Results Summary
+            txt.append("───────────────────────────────────────────────────────────────────────────\n");
+            txt.append("  DETAILED TEST RESULTS\n");
+            txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+            
+            txt.append(String.format("%-4s %-60s %-12s %-10s\n", "#", "Scenario", "Status", "Duration"));
+            txt.append("─────────────────────────────────────────────────────────────────────────────\n");
+            
+            int scenarioNum = 1;
+            for (ScenarioDetails scenario : analysis.scenarios) {
+                String status = scenario.status.equals("passed") ? "✓ PASSED" : "✗ FAILED";
+                String name = scenario.name;
+                if (name.length() > 55) {
+                    name = name.substring(0, 52) + "...";
+                }
+                txt.append(String.format("%-4d %-60s %-12s %-10s\n", 
+                    scenarioNum++, 
+                    name, 
+                    status, 
+                    scenario.formattedDuration));
+            }
+            txt.append("\n");
+            
+            // Step-by-Step Execution Details
+            txt.append("───────────────────────────────────────────────────────────────────────────\n");
+            txt.append("  STEP-BY-STEP EXECUTION DETAILS\n");
+            txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+            
+            scenarioNum = 1;
+            for (ScenarioDetails scenario : analysis.scenarios) {
+                txt.append("┌─────────────────────────────────────────────────────────────────────────┐\n");
+                txt.append(String.format("│ Scenario %d: %-62s│\n", scenarioNum, 
+                    truncate(scenario.name, 62)));
+                txt.append(String.format("│ Status: %-65s│\n", 
+                    scenario.status.equals("passed") ? "✓ PASSED" : "✗ FAILED"));
+                txt.append(String.format("│ Duration: %-63s│\n", scenario.formattedDuration));
+                txt.append("└─────────────────────────────────────────────────────────────────────────┘\n\n");
+                
+                int stepNum = 1;
+                for (StepDetails step : scenario.steps) {
+                    String stepStatus = step.status.equals("passed") ? "[✓]" : "[✗]";
+                    String stepDescription = step.keyword + step.name;
+                    
+                    txt.append(String.format("  %d. %s %s\n", stepNum, stepStatus, stepDescription));
+                    txt.append(String.format("      Duration: %s | Status: %s\n", 
+                        step.formattedDuration, 
+                        step.status.toUpperCase()));
+                    
+                    if (!step.status.equals("passed") && !step.errorMessage.isEmpty()) {
+                        txt.append("      ERROR: ").append(step.errorMessage.replace("\n", "\n             ")).append("\n");
+                    }
+                    txt.append("\n");
+                    stepNum++;
+                }
+                
+                scenarioNum++;
+            }
+            
+            // Performance Metrics
+            txt.append("───────────────────────────────────────────────────────────────────────────\n");
+            txt.append("  PERFORMANCE METRICS\n");
+            txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+            
+            txt.append(String.format("  ⚡ Total Execution Time:    %s\n", formatDuration(analysis.totalDuration)));
+            txt.append(String.format("  📊 Total Steps Executed:    %d\n", analysis.totalSteps));
+            txt.append(String.format("  ✓ Steps Passed:             %d\n", analysis.passedSteps));
+            txt.append(String.format("  ✗ Steps Failed:             %d\n", analysis.failedSteps));
+            txt.append(String.format("  📈 Step Success Rate:       %.2f%%\n", 
+                analysis.totalSteps > 0 ? (analysis.passedSteps * 100.0 / analysis.totalSteps) : 0));
+            txt.append("\n");
+            
+            // Failure Analysis (if any)
+            if (analysis.failedScenarios > 0) {
+                txt.append("───────────────────────────────────────────────────────────────────────────\n");
+                txt.append("  FAILURE ANALYSIS\n");
+                txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+                
+                for (ScenarioDetails scenario : analysis.scenarios) {
+                    if (scenario.status.equals("failed")) {
+                        txt.append("  ❌ Failed Scenario: ").append(scenario.name).append("\n");
+                        txt.append("     Duration: ").append(scenario.formattedDuration).append("\n");
+                        
+                        if (!scenario.errorMessage.isEmpty()) {
+                            txt.append("     Error Details:\n");
+                            txt.append("     ").append(scenario.errorMessage.replace("\n", "\n     ")).append("\n");
+                        }
+                        txt.append("\n");
+                    }
+                }
+            }
+            
+            // Key Findings
+            txt.append("───────────────────────────────────────────────────────────────────────────\n");
+            txt.append("  KEY FINDINGS\n");
+            txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+            
+            if (analysis.failedScenarios == 0) {
+                txt.append("  ✅ POSITIVE FINDINGS:\n\n");
+                txt.append("     • Perfect Success Rate: 100% pass rate indicates stable automation\n");
+                txt.append("     • All Scenarios Passed: No failures detected in current execution\n");
+                txt.append("     • Consistent Performance: All operations completed successfully\n");
+                txt.append("     • Production Ready: The automation suite is stable and reliable\n");
+            } else {
+                txt.append("  ⚠ AREAS OF CONCERN:\n\n");
+                txt.append(String.format("     • %d scenario(s) failed out of %d total scenarios\n", 
+                    analysis.failedScenarios, analysis.totalScenarios));
+                txt.append(String.format("     • %d step(s) failed out of %d total steps\n", 
+                    analysis.failedSteps, analysis.totalSteps));
+                txt.append("     • Review error logs for detailed failure analysis\n");
+                txt.append("     • Investigate and fix failing scenarios before production deployment\n");
+            }
+            txt.append("\n");
+            
+            // Conclusion
+            txt.append("───────────────────────────────────────────────────────────────────────────\n");
+            txt.append("  CONCLUSION\n");
+            txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+            
+            if (passRate == 100) {
+                txt.append("  The test execution demonstrates a ROBUST AND RELIABLE automation\n");
+                txt.append("  framework with a perfect success rate of 100%.\n\n");
+                txt.append("  ✅ Overall Assessment: All scenarios passed successfully. The automation\n");
+                txt.append("  suite is production-ready and demonstrates excellent stability.\n");
+            } else if (passRate >= 80) {
+                txt.append(String.format("  The test execution shows GOOD STABILITY with a %.2f%% pass rate,\n", passRate));
+                txt.append("  but some issues need attention.\n\n");
+                txt.append("  ⚠ Overall Assessment: The automation suite is functional but requires\n");
+                txt.append("  minor fixes for improved reliability.\n");
+            } else {
+                txt.append(String.format("  The test execution indicates CRITICAL ISSUES with a %.2f%% pass rate.\n", passRate));
+                txt.append("  Immediate attention required.\n\n");
+                txt.append("  ❌ Overall Assessment: Multiple failures detected. Please review and fix\n");
+                txt.append("  failing scenarios before production deployment.\n");
+            }
+            txt.append("\n");
+            
+            // Recommendations
+            txt.append("───────────────────────────────────────────────────────────────────────────\n");
+            txt.append("  RECOMMENDATIONS\n");
+            txt.append("───────────────────────────────────────────────────────────────────────────\n\n");
+            
+            if (analysis.failedScenarios == 0) {
+                txt.append("  • Continue monitoring test execution trends\n");
+                txt.append("  • Maintain regular test suite reviews\n");
+                txt.append("  • Keep automation framework updated\n");
+                txt.append("  • Consider expanding test coverage\n");
+            } else {
+                txt.append("  • Immediate: Fix all failing scenarios\n");
+                txt.append("  • Review: Analyze root cause of failures\n");
+                txt.append("  • Update: Modify tests if requirements changed\n");
+                txt.append("  • Verify: Re-run tests after fixes\n");
+            }
+            txt.append("\n");
+            
+            // Footer
+            txt.append("═══════════════════════════════════════════════════════════════════════════\n");
+            txt.append("  Report Generated: ").append(currentDate).append("\n");
+            txt.append("  Prepared By: Automation Testing Team\n");
+            txt.append("  Next Review: Weekly\n");
+            txt.append("  © 2025 SmartQA Automation Testing. All rights reserved.\n");
+            txt.append("═══════════════════════════════════════════════════════════════════════════\n");
+            
+            // Write to file
+            Files.write(Paths.get(TEXT_REPORT_PATH), txt.toString().getBytes());
+            
+        } catch (Exception e) {
+            logger.error("Error generating text report: {}", e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Truncate text to specified length with ellipsis
+     */
+    private static String truncate(String text, int maxLength) {
+        if (text == null) return "";
+        if (text.length() <= maxLength) {
+            return String.format("%-" + maxLength + "s", text);
+        }
+        return text.substring(0, maxLength - 3) + "...";
     }
 }
 

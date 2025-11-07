@@ -67,6 +67,15 @@ public class ConfigReader {
     public static int getAiMaxTokens() {
         return Integer.parseInt(getProperty("ai.max.tokens"));
     }
+    
+    // Test User Credentials
+    public static String getTestUsername() {
+        return getProperty("test.username");
+    }
+    
+    public static String getTestPassword() {
+        return getProperty("test.password");
+    }
 
     // Teams ChatOps Configuration
     public static String getTeamsWebhookUrl() {

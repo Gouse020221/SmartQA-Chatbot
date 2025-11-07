@@ -55,6 +55,20 @@ public class LoginPageSteps {
 
 	}
 
+	// New method to enter username from config
+	@When("I enter the username from config")
+	public void enter_username_from_config() {
+		String username = com.automation.config.ConfigReader.getTestUsername();
+		Enter_the_userName(username);
+	}
+	
+	// New method to enter password from config
+	@When("I enter the password from config and click on Login button")
+	public void enter_password_from_config_and_click_login() {
+		String password = com.automation.config.ConfigReader.getTestPassword();
+		Enter_the_password(password);
+	}
+
 	@When("I enter the uname {string}")
 	public void Enter_the_userName(String username) {
 

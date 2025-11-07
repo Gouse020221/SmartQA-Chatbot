@@ -340,6 +340,11 @@ public class Manage_Buyer_Brookfield_StepDef {
 			try {
 				logger.info("Creating Valid Buyer #" + i + " of " + numberOfBuyers);
 				
+				// Wait extra time before clicking Add Buyer (especially for 2nd+ buyers)
+				if (i > 1) {
+					Thread.sleep(3000); // Extra wait after previous buyer was saved
+				}
+				
 				buyerBrookfield.addbuyer_btn.click();
 				Thread.sleep(1000);
 				
@@ -368,7 +373,7 @@ public class Manage_Buyer_Brookfield_StepDef {
 				((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].click();", buyerBrookfield.saveBtn);
 				//DriverUtility.click_Using_javaScript(buyerBrookfield.saveBtn);
 				//buyerBrookfield.saveBtn.click();
-				Thread.sleep(2000);
+				Thread.sleep(3000); // Increased wait to ensure page reload completes
 				
 				logger.info("✓ Valid Buyer #" + i + " saved successfully!");
 				
