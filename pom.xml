@@ -1,0 +1,495 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>SmartQA</groupId>
+	<artifactId>SmartQA</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<!--   https://mvnrepository.com/artifact/org.apache.groovy/groovy-all   -->
+		<!--  https://mvnrepository.com/artifact/org.apache.groovy/groovy-all  -->
+		<dependency>
+			<groupId>org.apache.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>5.0.0</version>
+			<type>pom</type>
+		</dependency>
+		<!--  
+		https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java   -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.35.0</version>
+		</dependency>
+
+		<!--
+		https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>6.3.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-java   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>7.27.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-core   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>7.27.2</version>
+		</dependency>
+		<!--  
+		https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer   -->
+		<!--   <dependency> <groupId>io.cucumber</groupId>
+		<artifactId>cucumber-picocontainer</artifactId> 
+			<version>6.9.1</version> <scope>test</scope> </dependency>   -->
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-java8   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java8</artifactId>
+			<version>7.27.2</version>
+		</dependency>
+		<!--  
+		https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-picocontainer</artifactId>
+			<version>7.27.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-jvm   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-jvm</artifactId>
+			<version>7.27.2</version>
+			<type>pom</type>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-gherkin   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-gherkin</artifactId>
+			<version>7.27.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-groovy   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-groovy</artifactId>
+			<version>6.10.4</version>
+		</dependency>
+		<!--  
+		https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting   -->
+		<dependency>
+			<groupId>net.masterthought</groupId>
+			<artifactId>cucumber-reporting</artifactId>
+			<version>5.9.0</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.testng/testng   -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.11.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!--  https://mvnrepository.com/artifact/com.google.guava/guava  -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>33.4.8-jre</version>
+		</dependency>
+		<!--  
+		https://mvnrepository.com/artifact/com.github.mkolisnyk/cucumber-runner   -->
+		<dependency>
+			<groupId>com.github.mkolisnyk</groupId>
+			<artifactId>cucumber-runner</artifactId>
+			<version>1.3.5</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-html   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-html</artifactId>
+			<version>0.2.7</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/io.cucumber/cucumber-jvm-deps   -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-jvm-deps</artifactId>
+			<version>1.0.6</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.34</version>
+		</dependency>
+		<!--
+		https://mvnrepository.com/artifact/tech.grasshopper/extentreports-cucumber6-adapter   -->
+		<dependency>
+			<groupId>tech.grasshopper</groupId>
+			<artifactId>extentreports-cucumber6-adapter</artifactId>
+			<version>2.8.4</version>
+		</dependency>
+		<!--  	 https://mvnrepository.com/artifact/com.google.guava/guava 
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>32.1.1-jre</version>
+		</dependency>
+  -->
+		<!--   https://mvnrepository.com/artifact/org.apache.poi/poi   -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.apache.poi/poi-examples   -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-examples</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.apache.poi/poi-excelant   -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-excelant</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml   -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad   -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-lite   -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-lite</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-full   -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-full</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/commons-io/commons-io   -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>5.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.11.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/com.google.zxing/core   -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.5.3</version>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/com.google.zxing/zxing-javase   -->
+		<!--   https://mvnrepository.com/artifact/com.google.zxing/javase   -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>de.taimos</groupId>
+			<artifactId>totp</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!--  <dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.5.0-b01</version>
+		</dependency>  -->
+		<dependency>
+			<groupId>jakarta.mail</groupId>
+			<artifactId>jakarta.mail-api</artifactId>
+			<version>2.1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.angus</groupId>
+			<artifactId>angus-mail</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--  
+		 https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox 
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>3.0.3</version>
+		</dependency>  -->
+		<!--   https://mvnrepository.com/artifact/org.bytedeco/javacv   -->
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>javacv</artifactId>
+			<version>1.5.10</version>
+		</dependency>
+		<!--  https://mvnrepository.com/artifact/io.cucumber/cucumber-bom  -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-bom</artifactId>
+			<version>7.27.2</version>
+			<type>pom</type>
+			<scope>test</scope>
+		</dependency>
+		<!--   https://mvnrepository.com/artifact/org.bytedeco/ffmpeg   -->
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>ffmpeg</artifactId>
+			<version>6.1.1-1.5.10</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.stephenc.monte</groupId>
+			<artifactId>monte-screen-recorder</artifactId>
+			<version>0.7.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jcodec</groupId>
+			<artifactId>jcodec</artifactId>
+			<version>0.2.5</version>
+		</dependency>
+		<!--   SLF4J API   -->
+		<!--  https://mvnrepository.com/artifact/org.slf4j/slf4j-api  -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.1.0-alpha1</version>
+		</dependency>
+		<!--   Logback Implementation   -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.4.11</version>
+			<!--   Latest stable version   -->
+		</dependency>
+		<!-- 
+		https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api  -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.13.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.13.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-suite</artifactId>
+			<version>1.13.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>1.13.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-engine</artifactId>
+			<version>1.13.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-commons</artifactId>
+			<version>1.13.4</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- 
+		https://mvnrepository.com/artifact/io.cucumber/cucumber-junit-platform-engine  -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit-platform-engine</artifactId>
+			<version>7.27.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!--  Jackson for JSON parsing  -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.15.2</version>
+		</dependency>
+		<!--  OpenAI Java Client (service + client)  -->
+		<dependency>
+			<groupId>com.theokanning.openai-gpt3-java</groupId>
+			<artifactId>service</artifactId>
+			<version>0.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.theokanning.openai-gpt3-java</groupId>
+			<artifactId>client</artifactId>
+			<version>0.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20250517</version>
+		</dependency>
+		<!-- OkHttp for HTTP requests -->
+	<dependency>
+		<groupId>com.squareup.okhttp3</groupId>
+		<artifactId>okhttp</artifactId>
+		<version>4.12.0</version>
+	</dependency>
+
+	<!-- Gson for JSON parsing -->
+	<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.10.1</version>
+	</dependency>
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<mainClass>com.qa.util.AIReportGenerator</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.5.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<!--
+				https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin  -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.14.0</version>
+			</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>3.5.3</version>
+			<configuration>
+				<includes>
+					<include>**/runnerTest.java</include>
+					<include>**/*Test.java</include>
+				</includes>
+				<testFailureIgnore>false</testFailureIgnore>
+				<properties>
+					<configurationParameters>
+						cucumber.junit-platform.naming-strategy=long
+						cucumber.plugin=pretty,html:target/cucumber-reports/cucumber.html,json:target/cucumber-reports/Cucumber.json
+					</configurationParameters>
+				</properties>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>build-helper-maven-plugin</artifactId>
+			<version>3.6.1</version>
+			<executions>
+					<execution>
+						<id>current-time</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>timestamp-property</goal>
+						</goals>
+						<configuration>
+							<name>current.time</name>
+							<pattern>dd-MM-yyyy_HH-mm-ss</pattern>
+							<timeZone>IST</timeZone>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>net.masterthought</groupId>
+				<artifactId>maven-cucumber-reporting</artifactId>
+				<version>5.9.0</version>
+				<!--   3.15.0   -->
+				<executions>
+					<execution>
+						<id>generate-cucumber-reports</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<projectName>LotVue IHMS Web Application Automation</projectName>
+							<outputDirectory>
+								${project.build.directory}/${current.time}</outputDirectory>
+							<inputDirectory>${project.build.directory}</inputDirectory>
+							<jsonFiles>
+								<param>**/*.json</param>
+							</jsonFiles>
+							<enableFlashCharts>false</enableFlashCharts>
+							<checkBuildResult>false</checkBuildResult>
+							<skippedFails>true</skippedFails>
+							<buildNumber>42</buildNumber>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
